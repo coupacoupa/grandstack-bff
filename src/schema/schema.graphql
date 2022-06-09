@@ -1,0 +1,21 @@
+input PersonInput {
+  name: String
+  age: Int
+}
+
+type Person {
+  id: Int!
+  name: String!
+  age: Int
+}
+
+type Query {
+  helloWorld: String
+  getPerson(id: Int!): Person
+}
+
+type Mutation {
+  createPerson(personInput: PersonInput!): Person!
+  updatePerson(id: Int!, personInput: PersonInput!): Person!
+  deletePerson(id: Int!): Boolean!
+}
