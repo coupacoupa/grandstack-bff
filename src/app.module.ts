@@ -4,7 +4,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { AppResolver } from './app.resolver';
-import { Neo4jModule } from './neo4j/neo4j.module';
 import neo4j from 'neo4j-driver';
 import { typeDefs } from './schema/typeDef';
 
@@ -34,7 +33,6 @@ const neoSchema = new Neo4jGraphQL({
         };
       },
     }),
-    Neo4jModule.forRootAsync(),
   ],
   controllers: [],
   providers: [AppResolver],
