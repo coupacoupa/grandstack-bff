@@ -4,12 +4,22 @@ export const typeDefs = gql`
   ### TYPES ###
   type Department {
     name: String! @unique
-    users: [User!]! @relationship(type: "BELONGS_TO", direction: IN)
+    users: [User!]!
+      @relationship(type: "BELONGS_TO", properties: "BelongsTo", direction: IN)
   }
 
-  type User {
+  type User
+    @auth(
+      rules: [
+        { isAuthenticated: true }
+        { operations: [READ], allow: { oneBankId: "$jwt.sub" } }
+        { operations: [CREATE, READ, UPDATE, DELETE] }
+      ]
+    ) {
     oneBankId: String! @unique
-    department: [Department!]! @relationship(type: "BELONGS_TO", direction: OUT)
+    department: [Department!]!
+      @relationship(type: "BELONGS_TO", propertie s: "BelongsTo", direction: OUT)
+    isSuperAdmin: Boolean @default(value: false)
   }
 
   type Experiment {
@@ -31,10 +41,14 @@ export const typeDefs = gql`
     groupId: Int
   }
 
-  ## INTERFACES ##
-  interface Identity {
-    id: String!
-    name: String!
+  ## RELATIONSHIPS ##
+  interface BelongsTo @relationshipProperties {
+    canCreateExperiment: Boolean @default(value: false)
+    canUpdateExperiment: Boolean @default(value: false)
+    canDeleteExperiment: Boolean @default(value: false)
+    canExecuteExperiment: Boolean @default(value: false)
+    canDownloadReport: Boolean @default(value: false)
+    canAssignRoles: Boolean @default(value: false)
   }
 
   ### INPUTS ###

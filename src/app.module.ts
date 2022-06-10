@@ -6,6 +6,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { AppResolver } from './app.resolver';
 import neo4j from 'neo4j-driver';
 import { typeDefs } from './schema/typeDef';
+import { Neo4jGraphQLAuthJWTPlugin } from '@neo4j/graphql-plugin-auth';
 
 const driver = neo4j.driver(
   'neo4j+s://8b16cd23.databases.neo4j.io:7687',
@@ -14,6 +15,11 @@ const driver = neo4j.driver(
 const neoSchema = new Neo4jGraphQL({
   typeDefs,
   driver,
+  plugins: {
+    auth: new Neo4jGraphQLAuthJWTPlugin({
+      secret: 'super-secret',
+    }),
+  },
 });
 
 @Module({
@@ -30,6 +36,7 @@ const neoSchema = new Neo4jGraphQL({
         return {
           playground: true,
           schema,
+          context: ({ req }) => ({ req }),
         };
       },
     }),
