@@ -22,6 +22,8 @@
     "schema:gen": "ts-node generate-typings"
   },
   "dependencies": {
+    "@neo4j/graphql": "^3.3.0",
+    "@neo4j/graphql-ogm": "^3.3.0",
     "@nestjs/apollo": "^10.0.14",
     "@nestjs/common": "^8.4.6",
     "@nestjs/config": "^2.1.0",
@@ -32,7 +34,7 @@
     "apollo-server-express": "^3.8.2",
     "cypher-query-builder": "^6.0.4",
     "express": "^4.17.1",
-    "graphql": "^16.5.0",
+    "graphql": "^16.2.0",
     "neo4j-driver": "^4.4.5",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
